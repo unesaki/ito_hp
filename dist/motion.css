@@ -1,0 +1,83 @@
+/* Each brand has its own pace; content remains visible without JavaScript. */
+body { --motion-ease:cubic-bezier(.22,1,.36,1); --reveal-duration:1050ms; }
+body[data-brand="tsumugiya"] { --reveal-duration:1500ms; }
+.motion-glyph { display:inline-block; }
+.hero-image { translate:0 var(--hero-drift,0px); }
+.motion-ready .hero-image { scale:1.045; }
+.motion-ready .motion-item { transition:opacity var(--reveal-duration) var(--motion-ease),translate var(--reveal-duration) var(--motion-ease),clip-path var(--reveal-duration) var(--motion-ease); transition-delay:var(--reveal-delay,0ms); }
+.motion-ready [data-motion="pending"] { opacity:0; translate:0 34px; }
+.motion-ready [data-motion="visible"] { opacity:1; translate:0 0; }
+.motion-ready .motion-media[data-motion="pending"] { opacity:1; clip-path:inset(0 0 100% 0); translate:0 20px; }
+.motion-ready .motion-media[data-motion="visible"] { clip-path:inset(0); }
+[data-brand="ito"].motion-ready .motion-media[data-motion="pending"] { clip-path:inset(0 100% 0 0); translate:0 0; }
+.motion-ready .motion-item:focus-within { opacity:1; translate:0; clip-path:inset(0); }
+
+/* A quiet photographic opening for Tsumugiya. */
+[data-brand="tsumugiya"].intro-playing .hero-image { animation:heritage-photo 2400ms var(--motion-ease) both; }
+[data-brand="tsumugiya"].intro-playing .hero h1 .motion-glyph { animation:heritage-glyph 1400ms var(--motion-ease) both; animation-delay:calc(420ms + var(--glyph-index) * 65ms); }
+[data-brand="tsumugiya"].intro-playing .site-header { animation:soft-arrival 1300ms 300ms var(--motion-ease) both; }
+[data-brand="tsumugiya"].intro-playing .hero-kicker { animation:soft-arrival 1300ms 450ms var(--motion-ease) both; }
+[data-brand="tsumugiya"].intro-playing .hero-note { animation:soft-arrival 1400ms 1100ms var(--motion-ease) both; }
+[data-brand="tsumugiya"].intro-playing .hero-bottom { animation:soft-arrival 1200ms 1350ms var(--motion-ease) both; }
+@keyframes heritage-photo { from { clip-path:inset(0 0 100% 0); transform:scale(1.07); filter:brightness(.7); } to { clip-path:inset(0); transform:scale(1); filter:brightness(1); } }
+@keyframes heritage-glyph { from { opacity:0; transform:translateX(12px); filter:blur(3px); } to { opacity:1; transform:translateX(0); filter:blur(0); } }
+
+/* Ito's photography slides into the page; type follows with a quicker cadence. */
+[data-brand="ito"].intro-playing .hero-image-wrap { animation:editorial-photo 1700ms var(--motion-ease) both; }
+[data-brand="ito"].intro-playing .hero-image { animation:editorial-image 2600ms var(--motion-ease) both; }
+[data-brand="ito"].intro-playing .hero h1 .motion-glyph { animation:editorial-glyph 1050ms var(--motion-ease) both; animation-delay:calc(280ms + var(--glyph-index) * 38ms); }
+[data-brand="ito"].intro-playing .site-header { animation:soft-arrival 800ms 100ms var(--motion-ease) both; }
+[data-brand="ito"].intro-playing .hero .tiny { animation:soft-arrival 800ms 400ms var(--motion-ease) both; }
+[data-brand="ito"].intro-playing .hero-sub { animation:soft-arrival 950ms 800ms var(--motion-ease) both; }
+[data-brand="ito"].intro-playing .hero .text-link { animation:soft-arrival 1000ms 950ms var(--motion-ease) both; }
+[data-brand="ito"].intro-playing .hero-edge,[data-brand="ito"].intro-playing .hero-issue { animation:soft-arrival 900ms 1100ms var(--motion-ease) both; }
+@keyframes editorial-photo { from { clip-path:inset(0 0 0 100%); } to { clip-path:inset(0); } }
+@keyframes editorial-image { from { transform:scale(1.085); } to { transform:scale(1); } }
+@keyframes editorial-glyph { from { opacity:0; transform:translateY(32px) rotate(3deg); } to { opacity:1; transform:translateY(0) rotate(0); } }
+@keyframes soft-arrival { from { opacity:0; translate:0 14px; } to { opacity:1; translate:0 0; } }
+
+/* Link motion and fine details, with no layout shift. */
+.text-link,.solid-button { position:relative; translate:var(--pointer-x,0px) var(--pointer-y,0px); transition:translate 350ms var(--motion-ease),background-color 350ms,color 350ms,border-color 350ms; }
+.text-link::after { content:''; position:absolute; height:1px; background:currentColor; left:0; right:0; bottom:-1px; transform:scaleX(0); transform-origin:right; transition:transform 600ms var(--motion-ease); }
+.text-link:hover::after,.text-link:focus-visible::after { transform:scaleX(1); transform-origin:left; }
+.motion-ready .text-link[data-motion="visible"],.motion-ready .solid-button[data-motion="visible"] { translate:var(--pointer-x,0px) var(--pointer-y,0px); }
+.text-link:hover { gap:40px; }
+[data-brand="tsumugiya"] .text-link:hover { gap:35px; }
+.text-link>span,.shop-link>span,.nav-shop>span { display:inline-block; transition:transform 450ms var(--motion-ease); }
+.text-link:hover>span,.shop-link:hover>span,.nav-shop:hover>span { transform:translate(4px,-4px); }
+.solid-button:hover { background:#53604c; border-color:#53604c; }
+.desktop-nav>a { position:relative; }
+.desktop-nav>a::after { content:''; position:absolute; left:0; right:0; bottom:-9px; height:1px; background:currentColor; transform:scaleX(0); transform-origin:right; transition:transform 500ms var(--motion-ease); }
+.desktop-nav>a:hover::after,.desktop-nav>a:focus-visible::after { transform:scaleX(1); transform-origin:left; }
+.dialog-close { transition:transform 400ms var(--motion-ease),background-color 400ms; }
+.dialog-close:hover { transform:rotate(90deg); }
+.menu-toggle span { transition:transform 400ms var(--motion-ease); }
+.menu-toggle:hover span:first-child { transform:translateX(-4px); }
+.menu-toggle:hover span:last-child { transform:translateX(4px); }
+.scroll-line { transform-origin:left; animation:scroll-thread 2000ms 1800ms var(--motion-ease) 2; }
+@keyframes scroll-thread { 0%,100% { transform:scaleX(1); } 50% { transform:scaleX(.35); } }
+.color-chips>div span { transition:transform 650ms var(--motion-ease); }
+.color-chips>div:hover span { transform:scale(1.12) translateY(-4px); }
+.collection-image { overflow:hidden; }
+.collection-image img { transition:transform 1400ms var(--motion-ease); }
+.collection-image:hover img { transform:scale(1.025); }
+summary .plus,summary>span:last-child { transition:transform 400ms var(--motion-ease); }
+summary { transition:color 300ms; }
+summary:hover { color:#6e7b63; }
+dialog[open]::backdrop { animation:backdrop-arrival 350ms ease-out both; }
+@keyframes backdrop-arrival { from { opacity:0; } to { opacity:1; } }
+@media(max-width:700px) {
+  .motion-ready .hero-image { scale:1; translate:0; }
+  .motion-ready [data-motion="pending"] { translate:0 20px; }
+  .text-link,.solid-button { translate:none; }
+  [data-brand="tsumugiya"] .story-prose .text-link:hover { gap:10px; }
+  [data-brand="ito"].intro-playing .hero-image { animation-name:soft-arrival; }
+  .motion-ready .motion-media[data-motion="pending"] { translate:0; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  *,*::before,*::after { animation:none!important; transition:none!important; }
+  .motion-item,.motion-glyph,.hero-image,.hero-image-wrap { opacity:1!important; translate:none!important; clip-path:none!important; filter:none!important; }
+  .hero-image { scale:1!important; transform:none!important; }
+  .text-link,.solid-button { translate:none!important; }
+}
